@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System;
 
 namespace GVFS.FunctionalTests.Tests.EnlistmentPerTestCase
 {
@@ -85,10 +86,13 @@ namespace GVFS.FunctionalTests.Tests.EnlistmentPerTestCase
         [TestCase]
         public void CorruptLooseObjectIsDeleted()
         {
+            Console.WriteLine("CorruptLooseObjectIsDeleted start");
             this.ClearAllObjects();
+            Console.WriteLine("ClearAllObjects done");
 
             // Expand one pack, and verify we have loose objects
             this.ExpandOneTempPack(copyPackBackToPackDirectory: false);
+            Console.WriteLine("ExpandOneTempPack done");
             int looseObjectCount = this.GetLooseObjectFiles().Count();
             looseObjectCount.ShouldBeAtLeast(1, "Too few loose objects");
 
@@ -125,7 +129,9 @@ namespace GVFS.FunctionalTests.Tests.EnlistmentPerTestCase
 
         private void ClearAllObjects()
         {
+            Console.WriteLine("Before unmount GVFS");
             this.Enlistment.UnmountGVFS();
+            Console.WriteLine("After unmount GVFS");
 
             // Delete/Move any starting loose objects and packfiles
             this.DeleteFiles(this.GetLooseObjectFiles());
@@ -154,6 +160,7 @@ namespace GVFS.FunctionalTests.Tests.EnlistmentPerTestCase
         {
             foreach (string filePath in filePaths)
             {
+                Console.WriteLine("Deleting {0}", filePath);
                 File.Delete(filePath);
             }
         }
@@ -170,6 +177,7 @@ namespace GVFS.FunctionalTests.Tests.EnlistmentPerTestCase
             {
                 string path2 = Path.Combine(this.TempPackRoot, Path.GetFileName(file));
 
+                Console.WriteLine("Moving {0} to {1}", file, path2);
                 File.Move(file, path2);
             }
         }

@@ -115,20 +115,20 @@ jobs:
       shell: cmd
       run: install\info.bat
 
-    - name: Install existing product
-      shell: powershell
-      run: |
-        $git="https://github.com/microsoft/VFSForGit/releases/download/v1.0.21085.9/Git-2.31.0.vfs.0.1-64-bit.exe"
-        $gvfs="https://github.com/microsoft/VFSForGit/releases/download/v1.0.21085.9/SetupGVFS.1.0.21085.9.exe"
-        $client = New-Object System.Net.WebClient
-        $client.DownloadFile($git, "C:\setup-git.exe")
-        $client.DownloadFile($gvfs, "C:\setup-gvfs.exe")
-        Start-Process -Wait "C:\setup-git.exe" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /ALLOWDOWNGRADE=1"
-        Start-Process -Wait "C:\setup-gvfs.exe" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART"
+    # - name: Install existing product
+    #   shell: powershell
+    #   run: |
+    #     $git="https://github.com/microsoft/VFSForGit/releases/download/v1.0.21085.9/Git-2.31.0.vfs.0.1-64-bit.exe"
+    #     $gvfs="https://github.com/microsoft/VFSForGit/releases/download/v1.0.21085.9/SetupGVFS.1.0.21085.9.exe"
+    #     $client = New-Object System.Net.WebClient
+    #     $client.DownloadFile($git, "C:\setup-git.exe")
+    #     $client.DownloadFile($gvfs, "C:\setup-gvfs.exe")
+    #     Start-Process -Wait "C:\setup-git.exe" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /ALLOWDOWNGRADE=1"
+    #     Start-Process -Wait "C:\setup-gvfs.exe" "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART"
 
-    # - name: Install product
-    #   shell: cmd
-    #   run: install\install.bat
+    - name: Install product
+      shell: cmd
+      run: install\install.bat
 
     - name: ProjFS details (post-install)
       shell: cmd
@@ -167,7 +167,7 @@ jobs:
       shell: cmd
       run: install\info.bat
 
-    - name: Debugging with tmate
-      if: always()
-      uses: mxschmitt/action-tmate@v3.5
+    # - name: Debugging with tmate
+    #   if: always()
+    #   uses: mxschmitt/action-tmate@v3.5
 

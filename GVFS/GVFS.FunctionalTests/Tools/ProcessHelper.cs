@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System;
 
 namespace GVFS.FunctionalTests.Tools
 {
@@ -56,6 +57,10 @@ namespace GVFS.FunctionalTests.Tools
         private static string StartProcess(Process executingProcess, Stream inputStream = null)
         {
             executingProcess.Start();
+
+            Console.WriteLine("OTHER PROCSTART: path={0}", executingProcess.StartInfo.FileName);
+            Console.WriteLine("                 args={0}", executingProcess.StartInfo.Arguments);
+            Console.WriteLine("pid:{0}", executingProcess.Id);
 
             if (inputStream != null)
             {

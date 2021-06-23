@@ -194,8 +194,13 @@ namespace GVFS.FunctionalTests.Tools
         {
             if (this.IsEnlistmentMounted())
             {
+                Console.WriteLine("Unmount (ismounted=true)");
                 string result = this.CallGVFS("unmount \"" + this.enlistmentRoot + "\"", expectedExitCode: SuccessExitCode);
                 this.IsEnlistmentMounted().ShouldEqual(false, "GVFS did not unmount: " + result);
+            }
+            else
+            {
+                Console.WriteLine("Unmount (ismounted=false)");
             }
         }
 
@@ -251,6 +256,9 @@ namespace GVFS.FunctionalTests.Tools
 
             processInfo.Arguments = args + " " + TestConstants.InternalUseOnlyFlag + " " + internalParameter;
 
+            Console.WriteLine("PROCSTART: path={0}", processInfo.FileName);
+            Console.WriteLine("           args={0}", processInfo.Arguments);
+
             processInfo.WindowStyle = ProcessWindowStyle.Hidden;
             processInfo.UseShellExecute = false;
             processInfo.RedirectStandardOutput = true;
@@ -268,6 +276,7 @@ namespace GVFS.FunctionalTests.Tools
             {
                 if (standardInput != null)
                 {
+                    Console.WriteLine("About to write to process (pid={0})", process.Id);
                     process.StandardInput.Write(standardInput);
                     process.StandardInput.Close();
                 }
